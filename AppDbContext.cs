@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace YourProjectName.Data
+namespace GestionEmployes.Data
 {
     public class AppDbContext : DbContext
     {

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using YourProjectName.Data;
+using GestionEmployes.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
