@@ -1,43 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GestionEmployes.Data;
 using GestionEmployes.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GestionEmployes.Pages.Employees
 {
     public class DetailsModel : PageModel
     {
-        private readonly GestionEmployes.Data.AppDbContext _context;
+        [BindProperty(SupportsGet = true)]
+        public string? Action { get; set; }
+        public required string PageTitle { get; set; }
 
-        public DetailsModel(GestionEmployes.Data.AppDbContext context)
+        private readonly AppDbContext _context;
+        public DetailsModel(AppDbContext context)
         {
             _context = context;
         }
 
-        public Employee Employee { get; set; } = default!;
+        public IList<Employee> Employees { get; set; } = new List<Employee>();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty(SupportsGet = true)]
+        public string? SearchTerm { get; set; }
+
+        public async Task OnGetAsync()
         {
-            if (id == null)
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
-                return NotFound();
+                Employees = await _context.Employees
+                    .Where(e => e.Name.Contains(SearchTerm))
+                    .ToListAsync();
             }
-
-            var employee = await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            PageTitle = Action switch
             {
-                return NotFound();
-            }
-            else
-            {
-                Employee = employee;
-            }
-            return Page();
+                "delete" => "Rechercher un employé à retirer",
+                "modify" => "Rechercher un employé à modifier",
+                "details" => "Rechercher un employé pour voir les infos",
+                _ => "",
+            };
         }
     }
 }

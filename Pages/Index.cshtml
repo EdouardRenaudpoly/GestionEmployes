@@ -5,11 +5,10 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Bienvenue dans le système de gestion des employés !</p>
+    <h1 class="display-4">Bienvenue dans le système de gestion des employés !</h1>
+    <p>Vous pouvez choisir l'option désirée ci-dessous</p>
     <a asp-page="/Employees/Create" class="btn btn-primary">Ajouter un employé</a>
-    <a asp-page="/Employees/Create" class="btn btn-primary">Retirer un employé</a>
-    <a asp-page="/Employees/Create" class="btn btn-primary">Obtenir les infos d'un employé</a>
-    <a asp-page="/Employees/Create" class="btn btn-primary">Modifier les infos d'un employé</a>
-    <a asp-page="/Employees/Create" class="btn btn-primary">Ajouter un employé</a>
+    <a asp-page="/Employees/Details" asp-route-action="delete" class="btn btn-primary">Retirer un employé</a>
+    <a asp-page="/Employees/Details" asp-route-action="details" class="btn btn-primary">Obtenir les infos d'un employé</a>
+    <a asp-page="/Employees/Details" asp-route-action="modify" class="btn btn-primary">Modifier les infos d'un employé</a>
 </div>
